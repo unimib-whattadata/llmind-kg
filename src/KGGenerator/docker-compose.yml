@@ -1,0 +1,25 @@
+services:
+  jupyter:
+    image: jupyter/base-notebook:latest
+    container_name: llmind_kg
+    environment:
+      JUPYTER_ENABLE_LAB: "yes"
+      JUPYTER_TOKEN: "token"
+    ports:
+      - "8888:8888"
+    restart: always
+    volumes:
+      - ./work:/home/jovyan/work
+      - ~/my-data:/home/jovyan/work/my-data
+      - ~/my-data:/data/my-data
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:6.0
+    container_name: llmind_mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongo-data:/data/db
